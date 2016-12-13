@@ -8,4 +8,13 @@ public class A {
     static {
         staticValue = 100;
     }
+
+    public void someMethod() {
+        staticValue = 10;
+    }
+
+    public static void staticMethod() {
+        // value = 5;
+        staticValue = 500;
+    }
 }
