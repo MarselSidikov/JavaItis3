@@ -1,7 +1,7 @@
 package ru.itis.simple;
 
 
-public class Tokenizer {
+public class Tokenizer implements ru.itis.observer.Tokenizer {
     public void tokenize(String text) {
         char[] textAsCharArray = text.toCharArray();
 
