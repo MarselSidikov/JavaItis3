@@ -9,6 +9,12 @@ public class Main {
                 .isCrocodile(false)
                 .build();
 
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        };
 
     }
 }
