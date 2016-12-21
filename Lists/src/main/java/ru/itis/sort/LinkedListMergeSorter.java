@@ -2,6 +2,7 @@ package ru.itis.sort;
 
 import ru.itis.lists.LinkedList;
 
+import java.util.Comparator;
 import java.util.Iterator;
 
 public class LinkedListMergeSorter {
@@ -27,6 +28,14 @@ public class LinkedListMergeSorter {
     private static int bucketsCount;
 
     static {
+        goToStartState();
+    }
+
+    public static <T extends Comparable<? super T>> LinkedList<T> sort(LinkedList<T> list) {
+        return sort(list, null);
+    }
+
+    private static void goToStartState() {
         // создаем массив корзин
         buckets = new Bucket[MAX_BUCKETS_COUNT];
         // инициализируем каждую корзину
@@ -38,22 +47,28 @@ public class LinkedListMergeSorter {
     }
 
     // слияние двух упорядоченных списков в один упорядечнный
-    public static LinkedList merge(LinkedList firstList, LinkedList secondList) {
+    private static <T extends Comparable<? super T>> LinkedList<T> merge(LinkedList<T> firstList, LinkedList<T> secondList, Comparator<T> comparator) {
         // создаем список для результата
-        LinkedList result = new LinkedList();
+        LinkedList<T> result = new LinkedList<>();
 
         // получили итератор первого списка
-        Iterator<Integer> i = firstList.iterator();
+        Iterator<T> i = firstList.iterator();
         // получили итератор второго списка
-        Iterator<Integer> j = secondList.iterator();
+        Iterator<T> j = secondList.iterator();
         // получили первый элемент первого списка
-        int iValue = i.next();
+        T iValue = i.next();
         // получили первый элемент второго списка
-        int jValue = j.next();
+        T jValue = j.next();
         // пока в обоих списках есть элементы
         do {
             // если элемент первого списка меньше элемента второго
-            if (iValue < jValue) {
+            boolean iValueLessJValue = false;
+            if (comparator == null) {
+                iValueLessJValue = iValue.compareTo(jValue) < 0;
+            } else {
+                iValueLessJValue = comparator.compare(iValue, jValue) < 0;
+            }
+            if (iValueLessJValue) {
                 // добавляем его в результат
                 result.add(iValue);
                 // идем по первому списку дальше
@@ -98,19 +113,23 @@ public class LinkedListMergeSorter {
         return result;
     }
 
-    public static LinkedList sort(LinkedList list) {
+    // Параметр T должен быть сравниваемым Comparable
+    // Сам Comparable должен уметь сравнивать все объекты-пердки T
+    public static <T extends Comparable<? super T>> LinkedList<T> sort(LinkedList<T> list, Comparator<T> comparator) {
         // каждое значение списка кладем в корзины
-        for (Integer value : list) {
-            putToBuckets(value);
+        for (Object value : list) {
+            putToBuckets(value, comparator);
         }
         // слививаем оставшиеся корзины
-        processRemainsBuckets();
+        processRemainsBuckets(comparator);
         // возвращаем первую корзину с отсортированным списком
-        return buckets[0].list;
+        LinkedList<T> temp = buckets[0].list;
+        goToStartState();
+        return temp;
     }
 
     // процедура кладет в коризны значение
-    private static void putToBuckets(int value) {
+    private static <T> void putToBuckets(Object value, Comparator<T> comparator) {
         // в последний список кладем значение
         buckets[bucketsCount].list.add(value);
         // увеличиваем ранг корзины с последним списком
@@ -119,14 +138,14 @@ public class LinkedListMergeSorter {
         bucketsCount++;
         // сливаем корзины
         showBuckets();
-        processBuckets();
+        processBuckets(comparator);
         showBuckets();
     }
 
     private static void showBuckets() {
         for (int i = 0; i < bucketsCount; i++) {
             LinkedList currentList = buckets[i].list;
-            for (int value : currentList) {
+            for (Object value : currentList) {
                 System.out.print(value + " ");
             }
             System.out.println();
@@ -135,29 +154,29 @@ public class LinkedListMergeSorter {
     }
 
     // процедура слияния корзин если их ранги совпадают
-    private static void processBuckets() {
+    private static void processBuckets(Comparator comparator) {
         // если в списке чет есть
         while (bucketsCount > 1 && isPreparedToProcess()) {
-            mergePairListsFromBuckets();
+            mergePairListsFromBuckets(comparator);
         }
     }
 
     // слияние оставшихся корзин, независимо от их рангов
-    private static void processRemainsBuckets() {
+    private static void processRemainsBuckets(Comparator comparator) {
         while (bucketsCount > 1) {
-            mergePairListsFromBuckets();
+            mergePairListsFromBuckets(comparator);
         }
     }
 
     // слияние корзин
-    private static void mergePairListsFromBuckets() {
+    private static void mergePairListsFromBuckets(Comparator comparator) {
         // берем последний список
         LinkedList secondList = buckets[bucketsCount - 1].list;
         // берем предпоследний список
         LinkedList firstList = buckets[bucketsCount - 2].list;
 
         // сливаем
-        buckets[bucketsCount - 2].list = merge(firstList, secondList);
+        buckets[bucketsCount - 2].list = merge(firstList, secondList, comparator);
         buckets[bucketsCount - 2].rank = buckets[bucketsCount - 2].list.getCount();
         buckets[bucketsCount - 1].list = new LinkedList();
         buckets[bucketsCount - 1].rank = 0;

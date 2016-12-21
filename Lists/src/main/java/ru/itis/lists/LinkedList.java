@@ -2,18 +2,17 @@ package ru.itis.lists;
 
 import java.util.Iterator;
 
-public class LinkedList implements Iterable<Integer> {
-    private static class Node {
-        private int value;
+public class LinkedList<T> implements Iterable<T> {
+    private class Node {
+        private T value;
         private Node next;
-        Node(int value) {
+        Node(T value) {
             this.value = value;
             this.next = null;
         }
-
     }
 
-    private class LinkedListIterator implements Iterator<Integer> {
+    private class LinkedListIterator implements Iterator<T> {
 
         private Node current;
 
@@ -25,8 +24,8 @@ public class LinkedList implements Iterable<Integer> {
             return current != null;
         }
 
-        public Integer next() {
-            int temp = current.value;
+        public T next() {
+            T temp = current.value;
             current = current.next;
             return temp;
         }
@@ -42,7 +41,7 @@ public class LinkedList implements Iterable<Integer> {
         count = 0;
     }
 
-    public Iterator<Integer> iterator() {
+    public Iterator<T> iterator() {
         return new LinkedListIterator(top);
     }
 
@@ -50,7 +49,7 @@ public class LinkedList implements Iterable<Integer> {
         return count;
     }
 
-    public void add(int value) {
+    public void add(T value) {
         if (count == 0) {
             top = new Node(value);
             last = top;
@@ -64,7 +63,7 @@ public class LinkedList implements Iterable<Integer> {
 
     // void add(int value, int index), void addFirst(int value)
 
-    public int get(int index) {
+    public T get(int index) {
         Node current = top;
         for (int i = 0; i < count; i++) {
             if (i == index) {
