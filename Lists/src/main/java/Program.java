@@ -2,10 +2,7 @@ import ru.itis.lists.LinkedList;
 import ru.itis.sort.LinkedListMergeSorter;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
 
 public class Program {
     public static void main(String[] args) {
