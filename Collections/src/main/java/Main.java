@@ -1,9 +1,9 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        List<Integer> listInteger;
-        listInteger = new ArrayList<Integer>();
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+
     }
 }
