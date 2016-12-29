@@ -14,7 +14,11 @@ public class DataSourceFactory {
     private DataSource dataSource;
 
     static {
-        instance = new DataSourceFactory();
+        try {
+            instance = new DataSourceFactory();
+        } catch (IOException e) {
+            throw new IllegalArgumentException();
+        }
     }
 
     private DataSourceFactory() throws IOException {
@@ -23,12 +27,23 @@ public class DataSourceFactory {
                 "src\\main\\resources\\ru.itis\\context.properties"));
 
         String driverClassName = properties.getProperty("db.driver");
-        //
+        String dbUrl = properties.getProperty("db.url");
+        String dbUserName = properties.getProperty("db.user.name");
+        String dbPassword = properties.getProperty("db.password");
 
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName(driverClassName);
-
+        driverManagerDataSource.setUrl(dbUrl);
+        driverManagerDataSource.setUsername(dbUserName);
+        driverManagerDataSource.setPassword(dbPassword);
         dataSource = driverManagerDataSource;
     }
 
+    public static DataSourceFactory getInstance() {
+        return instance;
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
 }
