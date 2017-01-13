@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+    <bean id="usersService" class="ru.itis.spring.hibernate.service.UsersServiceImpl">
+        <constructor-arg ref="usersDaoHibernate"/>
+    </bean>
+
+    <bean id="usersDaoHibernate" class="ru.itis.spring.hibernate.dao.UsersDaoHibernateImpl">
+        <constructor-arg ref="sessionFactory"/>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mappingResources">
+                <list>
+                    <value>ru.itis.hibernate/User.hbm.xml</value>
+                    <value>ru.itis.hibernate/Auto.hbm.xml</value>
+                </list>
+        </property>
+        <property name="annotatedClasses">
+            <list>
+                <value>ru.itis.spring.hibernate.models.Child</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://localhost:5432/java_itis_group"/>
+        <property name="username" value="postgres"/>
+        <property name="password" value="qwerty007"/>
+    </bean>
+
+
+</beans>

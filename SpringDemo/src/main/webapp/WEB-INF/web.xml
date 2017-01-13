@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <servlet>
+        <servlet-name>MyServlet</servlet-name>
+        <servlet-class>ru.itis.example.servlet.SimpleServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>MyUsersServletJdbc</servlet-name>
+        <servlet-class>ru.itis.spring.jdbc.servlet.UsersServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>MyUsersServletHibernate</servlet-name>
+        <servlet-class>ru.itis.spring.hibernate.servlet.UsersServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MyUsersServletHibernate</servlet-name>
+        <url-pattern>/users-hibernate</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>MyUsersServletJdbc</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>MyServlet</servlet-name>
+        <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+
+    <listener>
+        <listener-class>ru.itis.example.config.SpringApplicationContextListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>ru.itis.spring.jdbc.config.SpringServletContextListenerForJdbcProject</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>ru.itis.spring.hibernate.config.SpringServletContextListenerForHibernateProject</listener-class>
+    </listener>
+
+
+</web-app>
