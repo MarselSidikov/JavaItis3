@@ -16,4 +16,8 @@ public class UsersServiceImpl implements UsersService {
     public List<User> getAllUsers() {
         return usersDao.findAll();
     }
+
+    public void addUser(String name) {
+        usersDao.save(new User(0L, name, null));
+    }
 }

@@ -31,4 +31,8 @@ public class UsersServlet extends HttpServlet {
             throw new IllegalArgumentException(e);
         }
     }
+
+    public void doPut(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(request.getParameter("name"));
+    }
 }

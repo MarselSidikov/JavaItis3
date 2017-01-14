@@ -29,6 +29,10 @@ public class UsersDaoJdbcImpl implements UsersDao {
     private static String SQL_GET_USER_BY_ID =
             "SELECT * FROM group_member WHERE id = :userId;";
 
+    // language=sql
+    private static String SQL_INSERT_USER =
+            "INSERT INTO group_member(name) VALUES(:name);";
+
     // шаблон для работы с базами данных
     private NamedParameterJdbcTemplate template;
 
@@ -65,9 +69,10 @@ public class UsersDaoJdbcImpl implements UsersDao {
         return new ArrayList<User>(userMap.values());
     }
 
-    public User find(int id) {
+    public void save(User user) {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("userId", id);
-        return template.queryForObject(SQL_GET_USER_BY_ID, params, userRowMapper);
+        params.put("name", user.getName());
+        template.update(SQL_INSERT_USER, params);
     }
+
 }

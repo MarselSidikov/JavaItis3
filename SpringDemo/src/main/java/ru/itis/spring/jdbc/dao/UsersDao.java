@@ -4,7 +4,5 @@ import ru.itis.spring.jdbc.model.User;
 
 import java.util.List;
 
-public interface UsersDao {
-    List<User> findAll();
-    User find(int id);
+public interface UsersDao extends Dao<User> {
 }

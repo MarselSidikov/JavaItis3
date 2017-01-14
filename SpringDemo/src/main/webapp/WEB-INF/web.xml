@@ -6,6 +6,16 @@
          version="3.0">
 
     <servlet>
+        <servlet-name>FrontController</servlet-name>
+        <servlet-class>ru.itis.spring.jdbc.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FrontController</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>MyServlet</servlet-name>
         <servlet-class>ru.itis.example.servlet.SimpleServlet</servlet-class>
     </servlet>
@@ -47,5 +57,14 @@
         <listener-class>ru.itis.spring.hibernate.config.SpringServletContextListenerForHibernateProject</listener-class>
     </listener>
 
+    <filter>
+        <filter-name>hiddenHttpMethodFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>hiddenHttpMethodFilter</filter-name>
+        <servlet-name>MyUsersServletJdbc</servlet-name>
+    </filter-mapping>
 
 </web-app>
