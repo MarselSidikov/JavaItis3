@@ -7,7 +7,6 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-@Configuration
 @EnableWebMvc
 @ComponentScan("ru.itis")
 public class SpringAppConfig {
