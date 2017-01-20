@@ -4,6 +4,7 @@ package ru.itis.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itis.dao.UsersDao;
+import ru.itis.models.Auto;
 import ru.itis.models.User;
 
 import java.util.List;
@@ -21,4 +22,11 @@ public class UsersServiceImpl implements UsersService {
     public void save(User user) {
         usersDao.save(user);
     }
+
+    @Override
+    public List<Auto> getAutoByUserId(Integer id) {
+        return usersDao.findAutoByUserId(id);
+    }
+
+
 }

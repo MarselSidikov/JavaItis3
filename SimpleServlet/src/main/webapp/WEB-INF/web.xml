@@ -10,6 +10,15 @@
     </servlet>
 
     <servlet>
+        <servlet-name>JsonServlet</servlet-name>
+        <servlet-class>ru.itis.JsonServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>JsonServlet</servlet-name>
+        <url-pattern>/json/users</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>UsersServlet</servlet-name>
         <servlet-class>ru.itis.UsersServlet</servlet-class>
     </servlet>
@@ -23,5 +32,7 @@
         <servlet-name>MyHelloServlet</servlet-name>
         <url-pattern>/hello</url-pattern>
     </servlet-mapping>
+
+
 
 </web-app>
