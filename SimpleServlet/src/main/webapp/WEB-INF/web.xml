@@ -4,14 +4,18 @@
 		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
+    <welcome-file-list>
+        <welcome-file>login.html</welcome-file>
+    </welcome-file-list>
+
     <servlet>
         <servlet-name>MyHelloServlet</servlet-name>
-        <servlet-class>ru.itis.SimpleServlet</servlet-class>
+        <servlet-class>ru.itis.simple.SimpleServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>JsonServlet</servlet-name>
-        <servlet-class>ru.itis.JsonServlet</servlet-class>
+        <servlet-class>ru.itis.json.JsonServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -20,7 +24,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>UsersServlet</servlet-name>
-        <servlet-class>ru.itis.UsersServlet</servlet-class>
+        <servlet-class>ru.itis.extended.UsersServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -33,6 +37,42 @@
         <url-pattern>/hello</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>ru.itis.cookie.CookieServletLogin</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>ru.itis.cookie.CookieServletLogout</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>RequestsFilter</filter-name>
+        <filter-class>ru.itis.filters.RequestFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RequestsFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>ru.itis.filters.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
 
 </web-app>
