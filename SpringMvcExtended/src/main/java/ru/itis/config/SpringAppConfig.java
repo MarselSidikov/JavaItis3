@@ -11,6 +11,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @ComponentScan("ru.itis")
 public class SpringAppConfig {
+
     @Bean
     public ViewResolver viewResolver() {
         return new InternalResourceViewResolver("/WEB-INF/views/", ".jsp");
